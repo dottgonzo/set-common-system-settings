@@ -38,7 +38,7 @@
     content: |
       kernel/mm/transparent_hugepage/enabled = never
       kernel/mm/transparent_hugepage/defrag = never
-    mode: 644
+    mode: "0644"
 
 - name: apply sysfs transparent_hugepage/enabled
   shell: if test -f /sys/kernel/mm/transparent_hugepage/enabled; then echo never > /sys/kernel/mm/transparent_hugepage/enabled; fi
