@@ -1,0 +1,57 @@
+---
+- name: Install prerequisites
+  apt:
+    name: ["sysfsutils"]
+    update_cache: yes
+
+- name: set sysctl vm.swappiness
+  sysctl:
+    name: vm.swappiness
+    value: "10"
+    state: present
+    sysctl_set: yes
+
+- name: set sysctl vm.max_map_count
+  sysctl:
+    name: vm.max_map_count
+    value: "2097152"
+    state: present
+    sysctl_set: yes
+
+- name: set sysctl vm.overcommit_memory
+  sysctl:
+    name: vm.overcommit_memory
+    value: "1"
+    state: present
+    sysctl_set: yes
+
+- name: set sysctl fs.file-max
+  sysctl:
+    name: fs.file-max
+    value: "2097152"
+    state: present
+    sysctl_set: yes
+
+- name: set sysfs
+  copy:
+    dest: /etc/sysfs.conf
+    content: |
+      kernel/mm/transparent_hugepage/enabled = never
+      kernel/mm/transparent_hugepage/defrag = never
+    mode: 644
+
+- name: apply sysfs transparent_hugepage/enabled
+  shell: if test -f /sys/kernel/mm/transparent_hugepage/enabled; then echo never > /sys/kernel/mm/transparent_hugepage/enabled; fi
+  args:
+    executable: /bin/bash
+  register: starthttpdout1
+  changed_when: false
+
+- name: apply sysfs transparent_hugepage/defrag
+  shell: if test -f /sys/kernel/mm/transparent_hugepage/defrag; then echo never > /sys/kernel/mm/transparent_hugepage/defrag;fi
+  register: starthttpdout2
+  changed_when: false
+  args:
+    executable: /bin/bash
+  # - name: Add worker node
+  #   shell: "docker info 2> /dev/null| grep 'Swarm: active' || docker swarm join --token {{init_manager_worker_token }} {{init_manager_ip}}:2377"
