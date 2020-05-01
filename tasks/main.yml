@@ -70,5 +70,5 @@
 
 - name: enable pam_limits module
   lineinfile:
-    path: /etc/security/limits.conf
+    path: /etc/pam.d/common-session
     line: session required pam_limits.so
