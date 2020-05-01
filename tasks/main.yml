@@ -53,5 +53,49 @@
   changed_when: false
   args:
     executable: /bin/bash
-  # - name: Add worker node
-  #   shell: "docker info 2> /dev/null| grep 'Swarm: active' || docker swarm join --token {{init_manager_worker_token }} {{init_manager_ip}}:2377"
+
+- name: set pam_limits configuration
+  copy:
+    dest: /etc/security/limits.conf
+    content: |
+      root            soft     nofile          65536
+      root            hard     nofile          65536
+      root            soft     memlock         unlimited
+      root            hard     memlock         unlimited
+      docker          soft     nofile          65536
+      docker          hard     nofile          65536
+      docker          soft     memlock         unlimited
+      docker          hard     memlock         unlimited
+    mode: "-rw-r--r--"
+
+- name: enable pam_limits module
+  lineinfile:
+    path: /etc/security/limits.conf
+    line: session required pam_limits.so
+
+
+
+
+# ## TODO
+
+
+# # add pam_limits configuration
+# cat >> /etc/security/limits.conf <<EOF
+
+# root            soft     nofile          65536
+# root            hard     nofile          65536
+# root            soft     memlock         unlimited
+# root            hard     memlock         unlimited
+# docker          soft     nofile          65536
+# docker          hard     nofile          65536
+# docker          soft     memlock         unlimited
+# docker          hard     memlock         unlimited
+
+# EOF
+
+# # enable pam_limits module
+# cat >> /etc/pam.d/common-session <<EOF
+
+# session required pam_limits.so
+
+# EOF
