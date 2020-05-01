@@ -72,30 +72,3 @@
   lineinfile:
     path: /etc/security/limits.conf
     line: session required pam_limits.so
-
-
-
-
-# ## TODO
-
-
-# # add pam_limits configuration
-# cat >> /etc/security/limits.conf <<EOF
-
-# root            soft     nofile          65536
-# root            hard     nofile          65536
-# root            soft     memlock         unlimited
-# root            hard     memlock         unlimited
-# docker          soft     nofile          65536
-# docker          hard     nofile          65536
-# docker          soft     memlock         unlimited
-# docker          hard     memlock         unlimited
-
-# EOF
-
-# # enable pam_limits module
-# cat >> /etc/pam.d/common-session <<EOF
-
-# session required pam_limits.so
-
-# EOF
