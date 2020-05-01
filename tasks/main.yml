@@ -72,3 +72,5 @@
   lineinfile:
     path: /etc/pam.d/common-session
     line: session required pam_limits.so
+  notify: 
+    - reboot machine

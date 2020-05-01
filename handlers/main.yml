@@ -1,2 +1,4 @@
 ---
-# handlers file for set-common-system-settings
+- name: reboot machine
+  reboot:
+    reboot_timeout: 360
