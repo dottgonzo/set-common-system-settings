@@ -25,13 +25,34 @@
     state: present
     sysctl_set: yes
 
+- name: set sysctl net.bridge.bridge-nf-call-iptables
+  sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: "1"
+    state: present
+    sysctl_set: yes
+
+- name: set sysctl net.ipv4.ip_forward
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    state: present
+    sysctl_set: yes
+
+- name: set net.ipv6.conf.default.forwarding
+  sysctl:
+    name: net.ipv6.conf.default.forwarding
+    value: "1"
+    state: present
+    sysctl_set: yes
+
 - name: set sysctl fs.file-max
   sysctl:
     name: fs.file-max
     value: "2097152"
     state: present
     sysctl_set: yes
-
+  
 - name: set sysfs
   copy:
     dest: /etc/sysfs.conf
