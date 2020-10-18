@@ -4,6 +4,11 @@
     name: ["sysfsutils"]
     update_cache: yes
 
+- name: Add the br_netfilter module
+  community.general.modprobe:
+    name: br_netfilter
+    state: present
+
 - name: set sysctl vm.swappiness
   sysctl:
     name: vm.swappiness
