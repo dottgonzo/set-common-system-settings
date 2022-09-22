@@ -60,7 +60,7 @@
 
 
 - name: "Set SysCtl max_user_instances to 8192"
-   sysctl:
+  sysctl:
     name: fs.inotify.max_user_instances
     value: '8192'
     state: present
